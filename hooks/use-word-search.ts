@@ -12,7 +12,13 @@ export function useWordSearch(datasetPath: string) {
       try {
         const response = await fetch(datasetPath);
         const data = await response.json();
-        setWords(data);
+        if (Array.isArray(data)) {
+          setWords(data);
+        } else {
+          const keys =
+            data && typeof data === "object" ? Object.keys(data) : [];
+          setWords(keys);
+        }
       } catch (error) {
         console.error("Error loading words:", error);
       } finally {
