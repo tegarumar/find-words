@@ -1,42 +1,123 @@
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden pt-12 sm:pt-16 pb-8 sm:pb-12">
-      {/* Animated background gradient */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"
-          style={{ animationDelay: "0.5s" }}
-        />
+    <section className="relative overflow-hidden pt-10 sm:pt-14 pb-6 sm:pb-10">
+      {/* Starfield pixel background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+        {/* Animated stars */}
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              width: i % 3 === 0 ? '4px' : '2px',
+              height: i % 3 === 0 ? '4px' : '2px',
+              background: i % 4 === 0 ? '#00ffff' : i % 4 === 1 ? '#ffff00' : i % 4 === 2 ? '#ff00ff' : '#ffffff',
+              left: `${(i * 37 + 11) % 100}%`,
+              top: `${(i * 53 + 7) % 100}%`,
+              animation: `blink ${1 + (i % 3) * 0.5}s step-end infinite`,
+              animationDelay: `${i * 0.3}s`,
+            }}
+          />
+        ))}
       </div>
 
       <div className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center">
-        {/* Main title with gradient */}
-        <div className="mb-4 inline-block">
+        {/* Game badge */}
+        <div className="mb-6 inline-block">
           <a
             href="https://www.roblox.com/games/130342654546662/Sambung-Kata"
             target="_blank"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 backdrop-blur-sm"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 16px',
+              background: '#0d0d2b',
+              border: '2px solid #ffff00',
+              boxShadow: '0 0 8px #ffff0060, 4px 4px 0 #ffff0040',
+              textDecoration: 'none',
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: '8px',
+              color: '#ffff00',
+              textShadow: '0 0 8px #ffff00',
+              letterSpacing: '0.05em',
+              transition: 'all 0.1s steps(2)',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.background = '#1a1a00';
+              (e.currentTarget as HTMLElement).style.transform = 'translate(-2px, -2px)';
+              (e.currentTarget as HTMLElement).style.boxShadow = '0 0 16px #ffff00, 6px 6px 0 #ffff0040';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.background = '#0d0d2b';
+              (e.currentTarget as HTMLElement).style.transform = 'translate(0, 0)';
+              (e.currentTarget as HTMLElement).style.boxShadow = '0 0 8px #ffff0060, 4px 4px 0 #ffff0040';
+            }}
           >
-            <span className="text-sm font-medium text-accent">
-              Sambung Kata - Roblox
-            </span>
+            <span>★</span>
+            <span>SAMBUNG KATA — ROBLOX</span>
+            <span>★</span>
           </a>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight ">
-          <span className="bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
-            Sambung Kata
+        {/* Main title */}
+        <h1 style={{
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: 'clamp(18px, 4vw, 32px)',
+          lineHeight: '1.6',
+          letterSpacing: '0.05em',
+          marginBottom: '16px',
+        }}>
+          <span style={{
+            color: '#00ffff',
+            textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff60',
+            display: 'block',
+          }}>
+            SAMBUNG
           </span>
-          <br />
-          <span className="text-foreground">Helper</span>
+          <span style={{
+            color: '#ff00ff',
+            textShadow: '0 0 10px #ff00ff, 0 0 20px #ff00ff60',
+            display: 'block',
+          }}>
+            KATA
+          </span>
+          <span style={{
+            color: '#ffff00',
+            textShadow: '0 0 8px #ffff00, 0 0 16px #ffff0060',
+            fontSize: '0.6em',
+            display: 'block',
+            marginTop: '8px',
+          }}>
+            HELPER
+          </span>
         </h1>
 
-        {/* Decorative line */}
-        <div className="mt-2 flex justify-center">
-          <div className="w-16 h-1 bg-gradient-to-r from-transparent via-accent to-transparent rounded-full" />
+        {/* Pixel divider */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '8px',
+          marginTop: '16px',
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: '14px',
+          color: '#00ffff',
+          opacity: 0.6,
+        }}>
+          <span>━━━━</span>
+          <span style={{ color: '#ffff00', animation: 'blink 1s step-end infinite' }}>◆</span>
+          <span>━━━━</span>
         </div>
       </div>
+
+      <style>{`
+        @keyframes blink {
+          0%, 49% { opacity: 1; }
+          50%, 100% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 }
