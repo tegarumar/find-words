@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import { Press_Start_2P } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navigation from "@/components/navigation";
 
-const pressStart2P = Press_Start_2P({
-  weight: "400",
+const spaceGrotesk = Space_Grotesk({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-pixel",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
   title: "Sambung Kata Helper",
-  description:
-    "Cari kata berdasarkan awalan atau akhiran dengan cepat untuk permainan sambung kata",
+  description: "Cari kata berdasarkan awalan atau akhiran",
   icons: {
     icon: ["/favicon.ico"],
   },
@@ -25,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={pressStart2P.variable}>
+    <html lang="en" className={spaceGrotesk.variable}>
       <body className="font-sans antialiased">
         <Navigation />
         {children}

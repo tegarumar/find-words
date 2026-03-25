@@ -1,107 +1,73 @@
 export default function EnglishHero() {
   return (
-    <section className="relative overflow-hidden pt-10 sm:pt-14 pb-6 sm:pb-10">
-      {/* Starfield pixel background */}
-      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              width: i % 3 === 0 ? '4px' : '2px',
-              height: i % 3 === 0 ? '4px' : '2px',
-              background: i % 4 === 0 ? '#00ffff' : i % 4 === 1 ? '#ffff00' : i % 4 === 2 ? '#ff00ff' : '#ffffff',
-              left: `${(i * 43 + 17) % 100}%`,
-              top: `${(i * 59 + 13) % 100}%`,
-              animation: `blink ${1 + (i % 3) * 0.5}s step-end infinite`,
-              animationDelay: `${i * 0.25}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center">
-        {/* Game badge */}
-        <div className="mb-6 inline-block">
+    <section
+      style={{
+        background: "#3B82F6",
+        borderBottom: "3px solid #0A0A0A",
+        padding: "36px 24px 32px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {/* Badge */}
+        <div style={{ marginBottom: "16px" }}>
           <div
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 16px',
-              background: '#0d0d2b',
-              border: '2px solid #ffff00',
-              boxShadow: '0 0 8px #ffff0060, 4px 4px 0 #ffff0040',
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '8px',
-              color: '#ffff00',
-              textShadow: '0 0 8px #ffff00',
-              letterSpacing: '0.05em',
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "5px 12px",
+              background: "#FFE600",
+              border: "3px solid #0A0A0A",
+              boxShadow: "3px 3px 0 #0A0A0A",
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 700,
+              fontSize: "12px",
+              color: "#0A0A0A",
+              letterSpacing: "0.04em",
             }}
           >
-            <span>★</span>
-            <span>WORD GAME HELPER</span>
-            <span>★</span>
+            ★ WORD GAME HELPER ★
           </div>
         </div>
 
         {/* Main title */}
-        <h1 style={{
-          fontFamily: "'Press Start 2P', monospace",
-          fontSize: 'clamp(18px, 4vw, 32px)',
-          lineHeight: '1.6',
-          letterSpacing: '0.05em',
-          marginBottom: '16px',
-        }}>
-          <span style={{
-            color: '#00ffff',
-            textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff60',
-            display: 'block',
-          }}>
-            ENGLISH
-          </span>
-          <span style={{
-            color: '#ff00ff',
-            textShadow: '0 0 10px #ff00ff, 0 0 20px #ff00ff60',
-            display: 'block',
-          }}>
-            WORD
-          </span>
-          <span style={{
-            color: '#ffff00',
-            textShadow: '0 0 8px #ffff00, 0 0 16px #ffff0060',
-            fontSize: '0.6em',
-            display: 'block',
-            marginTop: '8px',
-          }}>
-            HELPER
-          </span>
+        <h1
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(40px, 7vw, 80px)",
+            lineHeight: 1,
+            letterSpacing: "-0.04em",
+            color: "#FFFFFF",
+            margin: 0,
+          }}
+        >
+          English Word Helper
         </h1>
 
-        {/* Pixel divider */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '8px',
-          marginTop: '16px',
-          fontFamily: "'Press Start 2P', monospace",
-          fontSize: '14px',
-          color: '#00ffff',
-          opacity: 0.6,
-        }}>
-          <span>━━━━</span>
-          <span style={{ color: '#ffff00', animation: 'blink 1s step-end infinite' }}>◆</span>
-          <span>━━━━</span>
-        </div>
+        {/* Sub */}
+        <p
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 500,
+            fontSize: "16px",
+            color: "rgba(255,255,255,0.85)",
+            marginTop: "10px",
+            letterSpacing: "0.01em",
+          }}
+        >
+          Find words by prefix or suffix
+        </p>
       </div>
-
-      <style>{`
-        @keyframes blink {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-      `}</style>
     </section>
   );
 }

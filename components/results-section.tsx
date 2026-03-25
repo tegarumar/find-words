@@ -21,14 +21,18 @@ function highlightMatch(
   const parts: React.ReactNode[] = [];
   let currentIndex = 0;
 
-  // Highlight prefix
   if (prefix) {
     const prefixLength = lowerPrefix.length;
     if (lowerWord.startsWith(lowerPrefix)) {
       parts.push(
         <span
           key="prefix"
-          style={{ color: "#ffff00", textShadow: "0 0 6px #ffff00" }}
+          style={{
+            background: "#FFE600",
+            color: "#0A0A0A",
+            fontWeight: 800,
+            padding: "0 1px",
+          }}
         >
           {word.substring(0, prefixLength)}
         </span>,
@@ -37,18 +41,20 @@ function highlightMatch(
     }
   }
 
-  // Highlight suffix
   if (suffix) {
     const suffixStart = lowerWord.length - lowerSuffix.length;
-
     if (currentIndex < suffixStart) {
       parts.push(word.substring(currentIndex, suffixStart));
     }
-
     parts.push(
       <span
         key="suffix"
-        style={{ color: "#ff00ff", textShadow: "0 0 6px #ff00ff" }}
+        style={{
+          background: "#FF2D55",
+          color: "#FFFFFF",
+          fontWeight: 800,
+          padding: "0 1px",
+        }}
       >
         {word.substring(suffixStart)}
       </span>,
@@ -83,105 +89,102 @@ export default function ResultsSection({
       <section style={{ marginTop: "32px" }}>
         <div
           style={{
-            fontFamily: "'Press Start 2P', monospace",
-            fontSize: "9px",
-            color: "#00ffff",
-            marginBottom: "16px",
-            display: "flex",
+            display: "inline-flex",
             alignItems: "center",
             gap: "8px",
+            padding: "4px 12px",
+            background: "#0A0A0A",
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 700,
+            fontSize: "12px",
+            color: "#FFE600",
+            marginBottom: "16px",
+            letterSpacing: "0.08em",
           }}
         >
-          <span style={{ animation: "blink 0.4s step-end infinite" }}>█</span>
-          <span>LOADING...</span>
+          <span
+            style={{
+              display: "inline-block",
+              width: "10px",
+              height: "10px",
+              background: "#FFE600",
+              animation: "brut-bounce 0.5s ease-in-out infinite",
+            }}
+          />
+          MEMUAT...
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {[...Array(10)].map((_, i) => (
             <div
               key={i}
               style={{
-                height: "48px",
-                background: "#0d0d2b",
-                border: "2px solid #1a1a3a",
-                animation: `blink ${0.6 + i * 0.1}s step-end infinite`,
+                height: "56px",
+                background:
+                  i % 3 === 0 ? "#FFE600" : i % 3 === 1 ? "#F0EDE0" : "#FFFFFF",
+                border: "3px solid #0A0A0A",
+                opacity: 0.4 + i * 0.06,
               }}
             />
           ))}
         </div>
-        <style>{`@keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }`}</style>
+        <style>{`@keyframes brut-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }`}</style>
       </section>
     );
   }
 
-  // Empty state
+  // Empty state (searched but no results)
   if (showEmpty) {
     return (
       <section
         style={{ marginTop: "32px", textAlign: "center", padding: "48px 16px" }}
-        className="animate-pixel-fade"
+        className="animate-brut-fade"
       >
         <div
           style={{
-            fontFamily: "'Press Start 2P', monospace",
-            marginBottom: "24px",
+            display: "inline-block",
+            padding: "24px 32px",
+            background: "#FF2D55",
+            border: "4px solid #0A0A0A",
+            boxShadow: "6px 6px 0 #0A0A0A",
+            fontFamily: "'Space Grotesk', sans-serif",
           }}
         >
           <div
             style={{
-              fontSize: "32px",
-              marginBottom: "16px",
-              animation: "blink 1s step-end infinite",
+              fontSize: "40px",
+              marginBottom: "12px",
+              color: "#FFFFFF",
+              fontWeight: 800,
             }}
           >
             ✗
           </div>
-          <div
+          <h3
             style={{
-              display: "inline-block",
-              padding: "16px 24px",
-              background: "#1a0010",
-              border: "4px solid #ff0055",
-              boxShadow: "0 0 16px #ff005540, 4px 4px 0 #ff005520",
+              fontSize: "20px",
+              fontWeight: 800,
+              color: "#FFFFFF",
+              marginBottom: "8px",
+              letterSpacing: "-0.02em",
             }}
           >
-            <h3
-              style={{
-                fontSize: "12px",
-                color: "#ff0055",
-                textShadow: "0 0 8px #ff0055",
-                marginBottom: "12px",
-                letterSpacing: "0.1em",
-              }}
-            >
-              GAME OVER
-            </h3>
-            <p
-              style={{
-                fontSize: "8px",
-                color: "#6868aa",
-                lineHeight: "2",
-              }}
-            >
-              KATA TIDAK DITEMUKAN
-            </p>
-            <p
-              style={{
-                fontSize: "7px",
-                color: "#3a3a6a",
-                marginTop: "8px",
-                lineHeight: "2",
-              }}
-            >
-              COBA AWALAN / AKHIRAN BERBEDA
-            </p>
-          </div>
+            KATA TIDAK DITEMUKAN
+          </h3>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "rgba(255,255,255,0.8)",
+              fontWeight: 500,
+            }}
+          >
+            Coba awalan atau akhiran yang berbeda
+          </p>
         </div>
-        <style>{`@keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }`}</style>
       </section>
     );
   }
 
-  // Default empty state
+  // Default empty state (no query yet)
   if (!hasSearchQuery) {
     return (
       <section
@@ -190,87 +193,100 @@ export default function ResultsSection({
         <div
           style={{
             display: "inline-block",
-            padding: "24px 32px",
-            background: "#0d0d2b",
-            border: "4px solid #00ffff",
-            boxShadow: "0 0 16px #00ffff30, 4px 4px 0 #00ffff20",
-            fontFamily: "'Press Start 2P', monospace",
+            padding: "28px 40px",
+            background: "#FFFFFF",
+            border: "4px solid #0A0A0A",
+            boxShadow: "6px 6px 0 #0A0A0A",
+            fontFamily: "'Space Grotesk', sans-serif",
           }}
         >
           <div
-            style={{ fontSize: "28px", marginBottom: "16px", color: "#00ffff" }}
+            style={{
+              fontSize: "40px",
+              marginBottom: "12px",
+              color: "#0A0A0A",
+            }}
           >
             ⌨
           </div>
           <h3
             style={{
-              fontSize: "10px",
-              color: "#00ffff",
-              textShadow: "0 0 8px #00ffff",
-              marginBottom: "16px",
-              letterSpacing: "0.1em",
+              fontSize: "20px",
+              fontWeight: 800,
+              color: "#0A0A0A",
+              marginBottom: "10px",
+              letterSpacing: "-0.02em",
             }}
           >
-            INSERT COIN
+            MULAI PENCARIAN
           </h3>
           <p
             style={{
-              fontSize: "7px",
-              color: "#6868aa",
-              lineHeight: "2",
-              maxWidth: "280px",
+              fontSize: "14px",
+              color: "#666666",
+              fontWeight: 500,
+              maxWidth: "260px",
+              lineHeight: 1.6,
             }}
           >
-            KETIK AWALAN ATAU AKHIRAN
-            <br />
-            UNTUK MEMULAI PENCARIAN
+            Ketik awalan atau akhiran di atas untuk menemukan kata
           </p>
           <div
             style={{
               marginTop: "16px",
-              fontSize: "10px",
-              color: "#ffff00",
-              animation: "blink 1s step-end infinite",
+              display: "inline-block",
+              padding: "8px 16px",
+              background: "#FFE600",
+              border: "3px solid #0A0A0A",
+              fontWeight: 800,
+              fontSize: "13px",
+              letterSpacing: "0.04em",
             }}
           >
-            PRESS START ▶
+            CARI SEKARANG →
           </div>
         </div>
-        <style>{`@keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }`}</style>
       </section>
     );
   }
 
   // Results
   return (
-    <section style={{ marginTop: "32px" }} className="animate-pixel-fade">
-      {/* Results header HUD */}
+    <section style={{ marginTop: "32px" }} className="animate-brut-fade">
+      {/* Results header */}
       <div
         style={{
           marginBottom: "16px",
-          padding: "10px 16px",
-          background: "#0d0d2b",
-          border: "4px solid #00ffff",
-          boxShadow: "0 0 12px #00ffff30",
+          padding: "12px 16px",
+          background: "#FFE600",
+          border: "3px solid #0A0A0A",
+          boxShadow: "3px 3px 0 #0A0A0A",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          fontFamily: "'Press Start 2P', monospace",
+          fontFamily: "'Space Grotesk', sans-serif",
         }}
       >
         <h2
           style={{
-            fontSize: "10px",
-            color: "#00ffff",
-            textShadow: "0 0 6px #00ffff",
+            fontSize: "14px",
+            fontWeight: 700,
+            color: "#0a0a0a",
+            letterSpacing: "0.06em",
           }}
         >
           ▶ HASIL PENCARIAN
         </h2>
-        <span style={{ fontSize: "8px", color: "#6868aa" }}>
-          SCORE:{" "}
-          <span style={{ color: "#ffff00", textShadow: "0 0 6px #ffff00" }}>
-            {words.length}
+        <span
+          style={{
+            fontWeight: 800,
+            fontSize: "14px",
+            color: "#0a0a0a",
+          }}
+        >
+          {words.length}{" "}
+          <span style={{ fontWeight: 500, color: "#0a0a0a", fontSize: "12px" }}>
+            kata
           </span>
         </span>
       </div>
@@ -280,43 +296,43 @@ export default function ResultsSection({
           <div
             key={word}
             style={{
-              animation: `slideInPixel 0.1s steps(3) ${Math.min(index * 0.015, 0.5)}s both`,
+              animation: `brut-slide-in 0.15s ease ${Math.min(index * 0.012, 0.4)}s both`,
             }}
           >
             <div
               style={{
-                padding: "12px 8px",
-                background: "#0d0d2b",
-                border: "2px solid #1a1a3a",
+                padding: "12px 10px",
+                background: "#FFFFFF",
+                border: "3px solid #0A0A0A",
+                boxShadow: "3px 3px 0 #0A0A0A",
                 textAlign: "center",
                 cursor: "default",
-                transition: "all 0.1s steps(2)",
-                position: "relative",
+                transition:
+                  "transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.border = "2px solid #00ffff";
-                el.style.background = "#0a1a2a";
-                el.style.boxShadow = "0 0 12px #00ffff40, 0 0 20px #00ffff20";
-                el.style.transform = "translate(-2px, -2px)";
+                el.style.transform = "translate(3px, 3px)";
+                el.style.boxShadow = "0px 0px 0 #0A0A0A";
+                el.style.background = "#FFE600";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.border = "2px solid #1a1a3a";
-                el.style.background = "#0d0d2b";
-                el.style.boxShadow = "none";
                 el.style.transform = "translate(0, 0)";
+                el.style.boxShadow = "3px 3px 0 #0A0A0A";
+                el.style.background = "#FFFFFF";
               }}
             >
               <p
                 style={{
-                  fontSize: "9px",
-                  fontFamily: "'Press Start 2P', monospace",
-                  color: "#e0e0ff",
+                  fontSize: "13px",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontWeight: 600,
+                  color: "#0A0A0A",
                   wordBreak: "break-all",
-                  lineHeight: "1.8",
+                  lineHeight: 1.5,
+                  textTransform: "lowercase",
                 }}
-                className="uppercase tracking-wider"
               >
                 {highlighted}
               </p>
@@ -330,39 +346,25 @@ export default function ResultsSection({
           style={{
             marginTop: "24px",
             padding: "12px 16px",
-            background: "#1a1a00",
-            border: "2px solid #ffff00",
-            boxShadow: "0 0 8px #ffff0030",
-            fontFamily: "'Press Start 2P', monospace",
-            fontSize: "8px",
-            color: "#ffff00",
+            background: "#FFE600",
+            border: "3px solid #0A0A0A",
+            boxShadow: "4px 4px 0 #0A0A0A",
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 800,
+            fontSize: "13px",
+            color: "#0A0A0A",
             textAlign: "center",
-            lineHeight: "2",
           }}
         >
-          ⚠ MENAMPILKAN 100 KATA TERATAS
-          <br />
-          <span style={{ color: "#6868aa", fontSize: "7px" }}>
-            COBA LEBIH SPESIFIK
-          </span>
+          ⚠ MENAMPILKAN 100 KATA TERATAS —{" "}
+          <span style={{ fontWeight: 500 }}>coba lebih spesifik</span>
         </div>
       )}
 
       <style>{`
-        @keyframes slideInPixel {
+        @keyframes brut-slide-in {
           from { opacity: 0; transform: translateX(-8px); }
           to   { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes blink {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-        @keyframes fade-in-pixel {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        .animate-pixel-fade {
-          animation: fade-in-pixel 0.4s steps(4, end);
         }
       `}</style>
     </section>

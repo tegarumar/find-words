@@ -7,118 +7,138 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-0 z-50" style={{
-      background: '#0a0a1a',
-      borderBottom: '4px solid #00ffff',
-      boxShadow: '0 4px 0 0 #00ffff40, 0 0 20px #00ffff20',
-    }}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-center gap-8">
-          {/* Indonesia Link */}
-          <Link
-            href="/"
-            className="relative group"
-            style={{ textDecoration: 'none' }}
-          >
-            <span
-              style={{
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '10px',
-                color: pathname === "/" ? '#00ffff' : '#6868aa',
-                textShadow: pathname === "/" ? '0 0 8px #00ffff, 0 0 16px #00ffff40' : 'none',
-                transition: 'all 0.1s steps(2)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
-            >
-              {pathname === "/" && (
-                <span style={{ color: '#ffff00', animation: 'blink 0.8s step-end infinite' }}>▶</span>
-              )}
-              Indonesia
-            </span>
-            {/* Hover underline pixel */}
-            <div style={{
-              position: 'absolute',
-              bottom: '-4px',
-              left: 0,
-              right: 0,
-              height: '2px',
-              background: pathname === "/" ? '#00ffff' : 'transparent',
-              boxShadow: pathname === "/" ? '0 0 8px #00ffff' : 'none',
-            }} />
-          </Link>
+    <nav
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        background: "#FFFBF0",
+        borderBottom: "3px solid #0A0A0A",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "10px 20px",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 800,
+            fontSize: "18px",
+            color: "#0A0A0A",
+            textDecoration: "none",
+            letterSpacing: "-0.03em",
+            marginRight: "8px",
+          }}
+        >
+          FWORD<span style={{ color: "#3B82F6" }}>.</span>
+        </Link>
 
-          {/* Pixel divider */}
-          <div style={{
-            width: '4px',
-            height: '20px',
-            background: '#1a1a3a',
-            borderLeft: '2px solid #00ffff40',
-          }} />
+        {/* Indonesia button */}
+        <NavButton
+          href="/"
+          active={pathname === "/"}
+          activeColor="#3B82F6"
+          label="🇮🇩 Indonesia"
+        />
 
-          {/* English Link */}
-          <Link
-            href="/english"
-            className="relative group"
-            style={{ textDecoration: 'none' }}
-          >
-            <span
-              style={{
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '10px',
-                color: pathname === "/english" ? '#00ffff' : '#6868aa',
-                textShadow: pathname === "/english" ? '0 0 8px #00ffff, 0 0 16px #00ffff40' : 'none',
-                transition: 'all 0.1s steps(2)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
-            >
-              {pathname === "/english" && (
-                <span style={{ color: '#ffff00', animation: 'blink 0.8s step-end infinite' }}>▶</span>
-              )}
-              English
-            </span>
-            <div style={{
-              position: 'absolute',
-              bottom: '-4px',
-              left: 0,
-              right: 0,
-              height: '2px',
-              background: pathname === "/english" ? '#00ffff' : 'transparent',
-              boxShadow: pathname === "/english" ? '0 0 8px #00ffff' : 'none',
-            }} />
-          </Link>
+        {/* English button */}
+        <NavButton
+          href="/english"
+          active={pathname === "/english"}
+          activeColor="#F72585"
+          label="🇬🇧 English"
+        />
 
-          {/* Credits - pushed to right */}
+        {/* Spacer */}
+        <div style={{ marginLeft: "auto" }}>
           <a
             href="https://www.tiktok.com/@tegarua"
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              marginLeft: 'auto',
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '8px',
-              color: '#6868aa',
-              textDecoration: 'none',
-              letterSpacing: '0.05em',
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "7px 14px",
+              background: "#FFE600",
+              border: "3px solid #0A0A0A",
+              boxShadow: "3px 3px 0 #0A0A0A",
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 700,
+              fontSize: "13px",
+              color: "#0A0A0A",
+              textDecoration: "none",
+              letterSpacing: "0.02em",
+              transition: "transform 0.08s ease, box-shadow 0.08s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.transform = "translate(3px, 3px)";
+              el.style.boxShadow = "0px 0px 0 #0A0A0A";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.transform = "translate(0, 0)";
+              el.style.boxShadow = "3px 3px 0 #0A0A0A";
             }}
           >
-            BY <span style={{
-              color: '#ff00ff',
-              textShadow: '0 0 8px #ff00ff',
-            }}>KAEL</span>
+            BY KAEL
           </a>
         </div>
       </div>
-
-      <style>{`
-        @keyframes blink {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-      `}</style>
     </nav>
+  );
+}
+
+function NavButton({
+  href,
+  active,
+  activeColor,
+  label,
+}: {
+  href: string;
+  active: boolean;
+  activeColor: string;
+  label: string;
+}) {
+  return (
+    <Link
+      href={href}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        padding: "7px 14px",
+        background: active ? activeColor : "#FFFFFF",
+        border: "3px solid #0A0A0A",
+        boxShadow: active ? "3px 3px 0 #0A0A0A" : "3px 3px 0 #0A0A0A",
+        fontFamily: "'Space Grotesk', sans-serif",
+        fontWeight: 700,
+        fontSize: "13px",
+        color: active ? "#FFFFFF" : "#0A0A0A",
+        textDecoration: "none",
+        letterSpacing: "0.02em",
+        transition: "transform 0.08s ease, box-shadow 0.08s ease",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.transform = "translate(3px, 3px)";
+        el.style.boxShadow = "0px 0px 0 #0A0A0A";
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.transform = "translate(0, 0)";
+        el.style.boxShadow = "3px 3px 0 #0A0A0A";
+      }}
+    >
+      {label}
+    </Link>
   );
 }
